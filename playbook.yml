@@ -1,6 +1,7 @@
-- name: Configurar servidores web
-  hosts: webservers
-  become: true
+---
+- hosts: all
+  become: yes
+
   tasks:
     - name: Instalar nginx
       apt:
@@ -10,14 +11,5 @@
 
     - name: Copiar página personalizada
       copy:
-        src: site/index.html
+        content: "<h1>Hola soy Anyi desde Ansible!</h1>"
         dest: /var/www/html/index.html
-        owner: www-data
-        group: www-data
-        mode: '0644'
-
-    - name: Asegurar que nginx esté corriendo
-      service:
-        name: nginx
-        state: started
-        enabled: true
